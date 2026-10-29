@@ -128,8 +128,11 @@ export class ScolariteExperienceComponent {
   );
 
   testEcePassed = this.sharedState.testEcePassed;
+  testEceNotCompleted = this.sharedState.testEceNotCompleted;
   testEsomPassed = this.sharedState.testEsomPassed;
+  testEsomNotCompleted = this.sharedState.testEsomNotCompleted;
   testCeopmPassed = this.sharedState.testCeopmPassed;
+  testCeopmNotCompleted = this.sharedState.testCeopmNotCompleted;
   testCspnPassed = this.sharedState.testCspnPassed;
   testCspnNotCompleted = this.sharedState.testCspnNotCompleted;
   testCspn00182Passed = this.sharedState.testCspn00182Passed;
@@ -155,6 +158,48 @@ export class ScolariteExperienceComponent {
       next.add(domaine);
     }
     this.expandedDomaines.set(next);
+  }
+
+  onEceMainToggle(checked: boolean) {
+    this.testEcePassed.set(checked);
+    if (checked) {
+      this.testEceNotCompleted.set(false);
+    }
+  }
+
+  onEceNotCompletedToggle(checked: boolean) {
+    this.testEceNotCompleted.set(checked);
+    if (checked) {
+      this.testEcePassed.set(false);
+    }
+  }
+
+  onEsomMainToggle(checked: boolean) {
+    this.testEsomPassed.set(checked);
+    if (checked) {
+      this.testEsomNotCompleted.set(false);
+    }
+  }
+
+  onEsomNotCompletedToggle(checked: boolean) {
+    this.testEsomNotCompleted.set(checked);
+    if (checked) {
+      this.testEsomPassed.set(false);
+    }
+  }
+
+  onCeopmMainToggle(checked: boolean) {
+    this.testCeopmPassed.set(checked);
+    if (checked) {
+      this.testCeopmNotCompleted.set(false);
+    }
+  }
+
+  onCeopmNotCompletedToggle(checked: boolean) {
+    this.testCeopmNotCompleted.set(checked);
+    if (checked) {
+      this.testCeopmPassed.set(false);
+    }
   }
 
   onCspnMainToggle(checked: boolean) {

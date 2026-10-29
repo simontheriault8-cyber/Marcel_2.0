@@ -11,7 +11,8 @@ import {
   MANUAL_CRITERIA,
   JOB_RULES,
 } from "../app/data/reorientation-criteria.data";
-import { evaluateDynamicExperienceCriteria, applyCriterionToggleAndCleanup } from "./reorientation/experience-criteria-evaluator";
+import { evaluateDynamicExperienceCriteria } from "./reorientation/experience-criteria-evaluator";
+import { applyCriterionToggleAndCleanup } from "./reorientation/criteria-toggle-handler";
 import { evaluateExtraTestEligibility, evaluateEducationEligibility } from "./reorientation/job-eligibility-evaluator";
 
 export interface NcmEvaluationResult {
@@ -187,8 +188,11 @@ export class ReorientationCriteriaService {
       hasCeopmJob: this.hasCeopmJob(),
       hasCspnJob: this.hasCspnJob(),
       testEcePassed: this.sharedState.testEcePassed(),
+      testEceNotCompleted: this.sharedState.testEceNotCompleted(),
       testEsomPassed: this.sharedState.testEsomPassed(),
+      testEsomNotCompleted: this.sharedState.testEsomNotCompleted(),
       testCeopmPassed: this.sharedState.testCeopmPassed(),
+      testCeopmNotCompleted: this.sharedState.testCeopmNotCompleted(),
       testCspnNotCompleted: this.sharedState.testCspnNotCompleted(),
       testCspnPassed: this.sharedState.testCspnPassed(),
       testCspn00182Passed: this.sharedState.testCspn00182Passed(),

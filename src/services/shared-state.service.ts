@@ -78,8 +78,11 @@ export class SharedStateService {
 
   // Extra selection tests signals (ECE, ESOM, CEOPM, CSPN)
   testEcePassed = signal<boolean>(false);
+  testEceNotCompleted = signal<boolean>(false);
   testEsomPassed = signal<boolean>(false);
+  testEsomNotCompleted = signal<boolean>(false);
   testCeopmPassed = signal<boolean>(false);
+  testCeopmNotCompleted = signal<boolean>(false);
   testCspnPassed = signal<boolean>(false);
   testCspnNotCompleted = signal<boolean>(false);
   testCspn00182Passed = signal<boolean>(false);
@@ -149,8 +152,11 @@ export class SharedStateService {
     this.dossierJobFailedCe2.set(false);
     this.dossierJobFailedCe3.set(false);
     this.testEcePassed.set(false);
+    this.testEceNotCompleted.set(false);
     this.testEsomPassed.set(false);
+    this.testEsomNotCompleted.set(false);
     this.testCeopmPassed.set(false);
+    this.testCeopmNotCompleted.set(false);
     this.testCspnPassed.set(false);
     this.testCspnNotCompleted.set(false);
     this.testCspn00182Passed.set(false);

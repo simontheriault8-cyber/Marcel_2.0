@@ -858,75 +858,135 @@ export const SCOLARITE_EXPERIENCE_TEMPLATE = `
                       <!-- Test ECE (00203) -->
                       @if (hasEceJob()) {
                         <div class="p-2.5 bg-white border border-indigo-100 rounded-lg shadow-2xs">
-                          <label class="flex items-start gap-2.5 cursor-pointer select-none">
-                            <input
-                              type="checkbox"
-                              [checked]="testEcePassed()"
-                              (change)="testEcePassed.set($any($event.target).checked)"
-                              class="mt-0.5 w-4 h-4 text-indigo-600 border-slate-300 rounded focus:ring-indigo-500 cursor-pointer"
-                            />
-                            <div class="flex-1">
-                              <div class="flex items-center justify-between">
-                                <span class="text-xs font-bold text-slate-800">ECE</span>
-                                <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded" [class.bg-emerald-100]="testEcePassed()" [class.text-emerald-800]="testEcePassed()" [class.bg-slate-100]="!testEcePassed()" [class.text-slate-600]="!testEcePassed()">
-                                  {{ testEcePassed() ? i18n.t('scolExp.reussiAdmissible') : i18n.t('scolExp.nonCocheInadmissible') }}
-                                </span>
+                          <div class="flex flex-wrap items-start justify-between gap-2">
+                            <label class="flex items-start gap-2.5 cursor-pointer select-none">
+                              <input
+                                type="checkbox"
+                                [checked]="testEcePassed()"
+                                (change)="onEceMainToggle($any($event.target).checked)"
+                                class="mt-0.5 w-4 h-4 text-indigo-600 border-slate-300 rounded focus:ring-indigo-500 cursor-pointer"
+                              />
+                              <div>
+                                <div class="flex items-center gap-2">
+                                  <span class="text-xs font-bold text-slate-800">ECE</span>
+                                  <span
+                                    class="text-[10px] font-semibold px-1.5 py-0.5 rounded"
+                                    [class.bg-emerald-100]="testEcePassed()"
+                                    [class.text-emerald-800]="testEcePassed()"
+                                    [class.bg-amber-100]="testEceNotCompleted()"
+                                    [class.text-amber-800]="testEceNotCompleted()"
+                                    [class.bg-slate-100]="!testEcePassed() && !testEceNotCompleted()"
+                                    [class.text-slate-600]="!testEcePassed() && !testEceNotCompleted()"
+                                  >
+                                    {{ testEcePassed() ? i18n.t('scolExp.reussiAdmissible') : (testEceNotCompleted() ? i18n.t('scolExp.pasEncoreCompleteInadmissible') : i18n.t('scolExp.nonCocheInadmissible')) }}
+                                  </span>
+                                </div>
+                                <p class="text-[11px] text-slate-500 mt-0.5">
+                                  {{ i18n.t('scolExp.eceDesc') }}
+                                </p>
                               </div>
-                              <p class="text-[11px] text-slate-500 mt-0.5">
-                                {{ i18n.t('scolExp.eceDesc') }}
-                              </p>
-                            </div>
-                          </label>
+                            </label>
+
+                            <label class="inline-flex items-center gap-1.5 px-2 py-1 bg-amber-50/90 border border-amber-200 rounded-md cursor-pointer hover:bg-amber-100/80 select-none transition-colors">
+                              <input
+                                type="checkbox"
+                                [checked]="testEceNotCompleted()"
+                                (change)="onEceNotCompletedToggle($any($event.target).checked)"
+                                class="w-3.5 h-3.5 text-amber-600 border-amber-300 rounded focus:ring-amber-500 cursor-pointer"
+                              />
+                              <span class="text-xs font-medium text-amber-900">{{ i18n.t('scolExp.pasEncoreComplete') }}</span>
+                            </label>
+                          </div>
                         </div>
                       }
 
                       <!-- Test ESOM (00207) -->
                       @if (hasEsomJob()) {
                         <div class="p-2.5 bg-white border border-indigo-100 rounded-lg shadow-2xs">
-                          <label class="flex items-start gap-2.5 cursor-pointer select-none">
-                            <input
-                              type="checkbox"
-                              [checked]="testEsomPassed()"
-                              (change)="testEsomPassed.set($any($event.target).checked)"
-                              class="mt-0.5 w-4 h-4 text-indigo-600 border-slate-300 rounded focus:ring-indigo-500 cursor-pointer"
-                            />
-                            <div class="flex-1">
-                              <div class="flex items-center justify-between">
-                                <span class="text-xs font-bold text-slate-800">ESOM</span>
-                                <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded" [class.bg-emerald-100]="testEsomPassed()" [class.text-emerald-800]="testEsomPassed()" [class.bg-slate-100]="!testEsomPassed()" [class.text-slate-600]="!testEsomPassed()">
-                                  {{ testEsomPassed() ? i18n.t('scolExp.reussiAdmissible') : i18n.t('scolExp.nonCocheInadmissible') }}
-                                </span>
+                          <div class="flex flex-wrap items-start justify-between gap-2">
+                            <label class="flex items-start gap-2.5 cursor-pointer select-none">
+                              <input
+                                type="checkbox"
+                                [checked]="testEsomPassed()"
+                                (change)="onEsomMainToggle($any($event.target).checked)"
+                                class="mt-0.5 w-4 h-4 text-indigo-600 border-slate-300 rounded focus:ring-indigo-500 cursor-pointer"
+                              />
+                              <div>
+                                <div class="flex items-center gap-2">
+                                  <span class="text-xs font-bold text-slate-800">ESOM</span>
+                                  <span
+                                    class="text-[10px] font-semibold px-1.5 py-0.5 rounded"
+                                    [class.bg-emerald-100]="testEsomPassed()"
+                                    [class.text-emerald-800]="testEsomPassed()"
+                                    [class.bg-amber-100]="testEsomNotCompleted()"
+                                    [class.text-amber-800]="testEsomNotCompleted()"
+                                    [class.bg-slate-100]="!testEsomPassed() && !testEsomNotCompleted()"
+                                    [class.text-slate-600]="!testEsomPassed() && !testEsomNotCompleted()"
+                                  >
+                                    {{ testEsomPassed() ? i18n.t('scolExp.reussiAdmissible') : (testEsomNotCompleted() ? i18n.t('scolExp.pasEncoreCompleteInadmissible') : i18n.t('scolExp.nonCocheInadmissible')) }}
+                                  </span>
+                                </div>
+                                <p class="text-[11px] text-slate-500 mt-0.5">
+                                  {{ i18n.t('scolExp.esomDesc') }}
+                                </p>
                               </div>
-                              <p class="text-[11px] text-slate-500 mt-0.5">
-                                {{ i18n.t('scolExp.esomDesc') }}
-                              </p>
-                            </div>
-                          </label>
+                            </label>
+
+                            <label class="inline-flex items-center gap-1.5 px-2 py-1 bg-amber-50/90 border border-amber-200 rounded-md cursor-pointer hover:bg-amber-100/80 select-none transition-colors">
+                              <input
+                                type="checkbox"
+                                [checked]="testEsomNotCompleted()"
+                                (change)="onEsomNotCompletedToggle($any($event.target).checked)"
+                                class="w-3.5 h-3.5 text-amber-600 border-amber-300 rounded focus:ring-amber-500 cursor-pointer"
+                              />
+                              <span class="text-xs font-medium text-amber-900">{{ i18n.t('scolExp.pasEncoreComplete') }}</span>
+                            </label>
+                          </div>
                         </div>
                       }
 
                       <!-- Test CEOPM (00214) -->
                       @if (hasCeopmJob()) {
                         <div class="p-2.5 bg-white border border-indigo-100 rounded-lg shadow-2xs">
-                          <label class="flex items-start gap-2.5 cursor-pointer select-none">
-                            <input
-                              type="checkbox"
-                              [checked]="testCeopmPassed()"
-                              (change)="testCeopmPassed.set($any($event.target).checked)"
-                              class="mt-0.5 w-4 h-4 text-indigo-600 border-slate-300 rounded focus:ring-indigo-500 cursor-pointer"
-                            />
-                            <div class="flex-1">
-                              <div class="flex items-center justify-between">
-                                <span class="text-xs font-bold text-slate-800">CEOPM</span>
-                                <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded" [class.bg-emerald-100]="testCeopmPassed()" [class.text-emerald-800]="testCeopmPassed()" [class.bg-slate-100]="!testCeopmPassed()" [class.text-slate-600]="!testCeopmPassed()">
-                                  {{ testCeopmPassed() ? i18n.t('scolExp.reussiAdmissible') : i18n.t('scolExp.nonCocheInadmissible') }}
-                                </span>
+                          <div class="flex flex-wrap items-start justify-between gap-2">
+                            <label class="flex items-start gap-2.5 cursor-pointer select-none">
+                              <input
+                                type="checkbox"
+                                [checked]="testCeopmPassed()"
+                                (change)="onCeopmMainToggle($any($event.target).checked)"
+                                class="mt-0.5 w-4 h-4 text-indigo-600 border-slate-300 rounded focus:ring-indigo-500 cursor-pointer"
+                              />
+                              <div>
+                                <div class="flex items-center gap-2">
+                                  <span class="text-xs font-bold text-slate-800">CEOPM</span>
+                                  <span
+                                    class="text-[10px] font-semibold px-1.5 py-0.5 rounded"
+                                    [class.bg-emerald-100]="testCeopmPassed()"
+                                    [class.text-emerald-800]="testCeopmPassed()"
+                                    [class.bg-amber-100]="testCeopmNotCompleted()"
+                                    [class.text-amber-800]="testCeopmNotCompleted()"
+                                    [class.bg-slate-100]="!testCeopmPassed() && !testCeopmNotCompleted()"
+                                    [class.text-slate-600]="!testCeopmPassed() && !testCeopmNotCompleted()"
+                                  >
+                                    {{ testCeopmPassed() ? i18n.t('scolExp.reussiAdmissible') : (testCeopmNotCompleted() ? i18n.t('scolExp.pasEncoreCompleteInadmissible') : i18n.t('scolExp.nonCocheInadmissible')) }}
+                                  </span>
+                                </div>
+                                <p class="text-[11px] text-slate-500 mt-0.5">
+                                  {{ i18n.t('scolExp.ceopmDesc') }}
+                                </p>
                               </div>
-                              <p class="text-[11px] text-slate-500 mt-0.5">
-                                {{ i18n.t('scolExp.ceopmDesc') }}
-                              </p>
-                            </div>
-                          </label>
+                            </label>
+
+                            <label class="inline-flex items-center gap-1.5 px-2 py-1 bg-amber-50/90 border border-amber-200 rounded-md cursor-pointer hover:bg-amber-100/80 select-none transition-colors">
+                              <input
+                                type="checkbox"
+                                [checked]="testCeopmNotCompleted()"
+                                (change)="onCeopmNotCompletedToggle($any($event.target).checked)"
+                                class="w-3.5 h-3.5 text-amber-600 border-amber-300 rounded focus:ring-amber-500 cursor-pointer"
+                              />
+                              <span class="text-xs font-medium text-amber-900">{{ i18n.t('scolExp.pasEncoreComplete') }}</span>
+                            </label>
+                          </div>
                         </div>
                       }
 

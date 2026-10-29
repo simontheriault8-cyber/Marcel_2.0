@@ -6,8 +6,11 @@ export interface ExtraTestContext {
   hasCeopmJob: boolean;
   hasCspnJob: boolean;
   testEcePassed: boolean;
+  testEceNotCompleted: boolean;
   testEsomPassed: boolean;
+  testEsomNotCompleted: boolean;
   testCeopmPassed: boolean;
+  testCeopmNotCompleted: boolean;
   testCspnNotCompleted: boolean;
   testCspnPassed: boolean;
   testCspn00182Passed: boolean;
@@ -24,45 +27,48 @@ export function evaluateExtraTestEligibility(jobId: string, ctx: ExtraTestContex
 } {
     if (jobId === "00203") {
       const isTested = ctx.hasEceJob;
-      const eligible = !isTested || ctx.testEcePassed;
+      const notCompleted = ctx.testEceNotCompleted;
+      const eligible = !isTested || (!notCompleted && ctx.testEcePassed);
       return {
         isExtraTestRequired: isTested,
         testName: "ECE",
         eligible,
-        reasonFr: eligible
+        reasonFr: eligible || notCompleted
           ? ""
           : "Échec ou non-réussite de l'Évaluation des compétences en communication écrite (ECE).",
-        reasonEn: eligible
+        reasonEn: eligible || notCompleted
           ? ""
           : "Failed or did not pass the Written Communication Skills Evaluation (ECE).",
       };
     }
     if (jobId === "00207") {
       const isTested = ctx.hasEsomJob;
-      const eligible = !isTested || ctx.testEsomPassed;
+      const notCompleted = ctx.testEsomNotCompleted;
+      const eligible = !isTested || (!notCompleted && ctx.testEsomPassed);
       return {
         isExtraTestRequired: isTested,
         testName: "ESOM",
         eligible,
-        reasonFr: eligible
+        reasonFr: eligible || notCompleted
           ? ""
           : "Échec ou non-réussite de l'Évaluation de sélection des officiers de marine (ESOM).",
-        reasonEn: eligible
+        reasonEn: eligible || notCompleted
           ? ""
           : "Failed or did not pass the Naval Officer Selection Assessment (ESOM).",
       };
     }
     if (jobId === "00214") {
       const isTested = ctx.hasCeopmJob;
-      const eligible = !isTested || ctx.testCeopmPassed;
+      const notCompleted = ctx.testCeopmNotCompleted;
+      const eligible = !isTested || (!notCompleted && ctx.testCeopmPassed);
       return {
         isExtraTestRequired: isTested,
         testName: "CEOPM",
         eligible,
-        reasonFr: eligible
+        reasonFr: eligible || notCompleted
           ? ""
           : "Échec ou non-réussite du Centre d’évaluation des officiers de la police militaire (CEOPM).",
-        reasonEn: eligible
+        reasonEn: eligible || notCompleted
           ? ""
           : "Failed or did not pass the Military Police Officer Assessment Centre (CEOPM).",
       };
