@@ -300,8 +300,11 @@ export class ReorientationComponent {
     this.ignoreSip.set(false);
     this.includeTraitement.set(false);
     this.testEcePassed.set(false);
+    this.testEceNotCompleted.set(false);
     this.testEsomPassed.set(false);
+    this.testEsomNotCompleted.set(false);
     this.testCeopmPassed.set(false);
+    this.testCeopmNotCompleted.set(false);
     this.testCspnPassed.set(false);
     this.testCspnNotCompleted.set(false);
     this.testCspn00182Passed.set(false);
@@ -400,8 +403,11 @@ export class ReorientationComponent {
   dropdownOpen3 = signal<boolean>(false);
 
   testEcePassed = this.sharedState.testEcePassed;
+  testEceNotCompleted = this.sharedState.testEceNotCompleted;
   testEsomPassed = this.sharedState.testEsomPassed;
+  testEsomNotCompleted = this.sharedState.testEsomNotCompleted;
   testCeopmPassed = this.sharedState.testCeopmPassed;
+  testCeopmNotCompleted = this.sharedState.testCeopmNotCompleted;
   testCspnPassed = this.sharedState.testCspnPassed;
   testCspnNotCompleted = this.sharedState.testCspnNotCompleted;
   testCspn00182Passed = this.sharedState.testCspn00182Passed;
@@ -428,6 +434,56 @@ export class ReorientationComponent {
   hasAnyExtraTest = computed(() =>
     this.hasEceJob() || this.hasEsomJob() || this.hasCeopmJob() || this.hasCspnJob()
   );
+
+  onEceMainToggle(checked: boolean) {
+    this.testEcePassed.set(checked);
+    if (checked) {
+      this.testEceNotCompleted.set(false);
+    }
+  }
+
+  onEceNotCompletedToggle(checked: boolean) {
+    this.testEceNotCompleted.set(checked);
+    if (checked) {
+      this.testEcePassed.set(false);
+    }
+  }
+
+  onEsomMainToggle(checked: boolean) {
+    this.testEsomPassed.set(checked);
+    if (checked) {
+      this.testEsomNotCompleted.set(false);
+    }
+  }
+
+  onEsomNotCompletedToggle(checked: boolean) {
+    this.testEsomNotCompleted.set(checked);
+    if (checked) {
+      this.testEsomPassed.set(false);
+    }
+  }
+
+  onCeopmMainToggle(checked: boolean) {
+    this.testCeopmPassed.set(checked);
+    if (checked) {
+      this.testCeopmNotCompleted.set(false);
+    }
+  }
+
+  onCeopmNotCompletedToggle(checked: boolean) {
+    this.testCeopmNotCompleted.set(checked);
+    if (checked) {
+      this.testCeopmPassed.set(false);
+    }
+  }
+
+  isExtraTestNotCompleted(jobId: string): boolean {
+    if (jobId === '00203') return this.testEceNotCompleted();
+    if (jobId === '00207') return this.testEsomNotCompleted();
+    if (jobId === '00214') return this.testCeopmNotCompleted();
+    if (jobId === '00182' || jobId === '00183' || jobId === '00184') return this.testCspnNotCompleted();
+    return false;
+  }
 
   onCspnMainToggle(checked: boolean) {
     this.testCspnPassed.set(checked);
@@ -459,45 +515,48 @@ export class ReorientationComponent {
   } {
     if (jobId === "00203") {
       const isTested = this.hasEceJob();
-      const eligible = !isTested || this.testEcePassed();
+      const notCompleted = this.testEceNotCompleted();
+      const eligible = !isTested || (!notCompleted && this.testEcePassed());
       return {
         isExtraTestRequired: isTested,
         testName: "ECE",
         eligible,
-        reasonFr: eligible
+        reasonFr: eligible || notCompleted
           ? ""
           : "Échec ou non-réussite de l'Évaluation des compétences en communication écrite (ECE).",
-        reasonEn: eligible
+        reasonEn: eligible || notCompleted
           ? ""
           : "Failed or did not pass the Written Communication Skills Evaluation (ECE).",
       };
     }
     if (jobId === "00207") {
       const isTested = this.hasEsomJob();
-      const eligible = !isTested || this.testEsomPassed();
+      const notCompleted = this.testEsomNotCompleted();
+      const eligible = !isTested || (!notCompleted && this.testEsomPassed());
       return {
         isExtraTestRequired: isTested,
         testName: "ESOM",
         eligible,
-        reasonFr: eligible
+        reasonFr: eligible || notCompleted
           ? ""
           : "Échec ou non-réussite de l'Évaluation de sélection des officiers de marine (ESOM).",
-        reasonEn: eligible
+        reasonEn: eligible || notCompleted
           ? ""
           : "Failed or did not pass the Naval Officer Selection Assessment (ESOM).",
       };
     }
     if (jobId === "00214") {
       const isTested = this.hasCeopmJob();
-      const eligible = !isTested || this.testCeopmPassed();
+      const notCompleted = this.testCeopmNotCompleted();
+      const eligible = !isTested || (!notCompleted && this.testCeopmPassed());
       return {
         isExtraTestRequired: isTested,
         testName: "CEOPM",
         eligible,
-        reasonFr: eligible
+        reasonFr: eligible || notCompleted
           ? ""
           : "Échec ou non-réussite du Centre d’évaluation des officiers de la police militaire (CEOPM).",
-        reasonEn: eligible
+        reasonEn: eligible || notCompleted
           ? ""
           : "Failed or did not pass the Military Police Officer Assessment Centre (CEOPM).",
       };
@@ -797,8 +856,11 @@ export class ReorientationComponent {
     this.medicalA.set("");
     this.medicalU.set("");
     this.testEcePassed.set(false);
+    this.testEceNotCompleted.set(false);
     this.testEsomPassed.set(false);
+    this.testEsomNotCompleted.set(false);
     this.testCeopmPassed.set(false);
+    this.testCeopmNotCompleted.set(false);
     this.testCspnPassed.set(false);
     this.testCspnNotCompleted.set(false);
     this.testCspn00182Passed.set(false);

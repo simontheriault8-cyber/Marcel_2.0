@@ -102,7 +102,7 @@ export const REORIENTATION_TEMPLATE_PART2 = `
                                   {{
                                     s2.isExtraTestAdmissible
                                       ? i18n.t('reo.extraTestSuccess')
-                                      : (testCspnNotCompleted() && (s2.job.id === '00182' || s2.job.id === '00183' || s2.job.id === '00184'))
+                                      : isExtraTestNotCompleted(s2.job.id)
                                         ? i18n.t('reo.extraTestNotCompletedYet')
                                         : i18n.t('reo.extraTestFailed')
                                   }}
@@ -408,7 +408,7 @@ export const REORIENTATION_TEMPLATE_PART2 = `
                                   {{
                                     s3.isExtraTestAdmissible
                                       ? i18n.t('reo.extraTestSuccess')
-                                      : (testCspnNotCompleted() && (s3.job.id === '00182' || s3.job.id === '00183' || s3.job.id === '00184'))
+                                      : isExtraTestNotCompleted(s3.job.id)
                                         ? i18n.t('reo.extraTestNotCompletedYet')
                                         : i18n.t('reo.extraTestFailed')
                                   }}

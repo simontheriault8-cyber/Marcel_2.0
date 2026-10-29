@@ -66,8 +66,11 @@ export interface RoleSnapshot {
   dossierJobFailedCe2: boolean;
   dossierJobFailedCe3: boolean;
   testEcePassed?: boolean;
+  testEceNotCompleted?: boolean;
   testEsomPassed?: boolean;
+  testEsomNotCompleted?: boolean;
   testCeopmPassed?: boolean;
+  testCeopmNotCompleted?: boolean;
   testCspnPassed?: boolean;
   testCspnNotCompleted?: boolean;
   testCspn00182Passed?: boolean;

@@ -24,8 +24,11 @@ export function createSnapshot(this: any): RoleSnapshot {
       dossierJobFailedCe2: this.sharedState.dossierJobFailedCe2(),
       dossierJobFailedCe3: this.sharedState.dossierJobFailedCe3(),
       testEcePassed: this.sharedState.testEcePassed(),
+      testEceNotCompleted: this.sharedState.testEceNotCompleted(),
       testEsomPassed: this.sharedState.testEsomPassed(),
+      testEsomNotCompleted: this.sharedState.testEsomNotCompleted(),
       testCeopmPassed: this.sharedState.testCeopmPassed(),
+      testCeopmNotCompleted: this.sharedState.testCeopmNotCompleted(),
       testCspnPassed: this.sharedState.testCspnPassed(),
       testCspnNotCompleted: this.sharedState.testCspnNotCompleted(),
       testCspn00182Passed: this.sharedState.testCspn00182Passed(),
@@ -224,8 +227,11 @@ export function applySnapshot(this: any, snapshot: RoleSnapshot) {
     this.sharedState.dossierJobFailedCe2.set(snapshot.dossierJobFailedCe2 || false);
     this.sharedState.dossierJobFailedCe3.set(snapshot.dossierJobFailedCe3 || false);
     this.sharedState.testEcePassed.set(snapshot.testEcePassed || false);
+    this.sharedState.testEceNotCompleted.set(snapshot.testEceNotCompleted || false);
     this.sharedState.testEsomPassed.set(snapshot.testEsomPassed || false);
+    this.sharedState.testEsomNotCompleted.set(snapshot.testEsomNotCompleted || false);
     this.sharedState.testCeopmPassed.set(snapshot.testCeopmPassed || false);
+    this.sharedState.testCeopmNotCompleted.set(snapshot.testCeopmNotCompleted || false);
     this.sharedState.testCspnPassed.set(snapshot.testCspnPassed || false);
     this.sharedState.testCspnNotCompleted.set(snapshot.testCspnNotCompleted || false);
     this.sharedState.testCspn00182Passed.set(snapshot.testCspn00182Passed || false);
@@ -335,8 +341,11 @@ export function createFreshSnapshot(this: any, role: 'recruiter' | 'gestionnaire
       dossierJobFailedCe2: false,
       dossierJobFailedCe3: false,
       testEcePassed: false,
+      testEceNotCompleted: false,
       testEsomPassed: false,
+      testEsomNotCompleted: false,
       testCeopmPassed: false,
+      testCeopmNotCompleted: false,
       testCspnPassed: false,
       testCspnNotCompleted: false,
       testCspn00182Passed: false,
