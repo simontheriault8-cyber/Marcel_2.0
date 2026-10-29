@@ -7,3 +7,4 @@ export * from './dictionaries/registry-notes.dict';
 export * from './dictionaries/emails-subjects-headers.dict';
 export * from './dictionaries/data-labels.dict';
 export * from './dictionaries/jobs.dict';
+export * from './dictionaries/university-degrees.dict';

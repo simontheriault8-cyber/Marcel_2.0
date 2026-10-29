@@ -1422,7 +1422,7 @@ export const APP_PREVIEW_MODALS_TEMPLATE = `
     <!-- Job Search Modal (always rendered, hidden when not shown) -->
     <app-job-search-modal
       [class.hidden]="!showJobSearch()"
-      [showReorientationTab]="selectedRole() === 'recruiter'"
+      [showReorientationTab]="true"
       (closeModal)="showJobSearch.set(false)"
     ></app-job-search-modal>
     }

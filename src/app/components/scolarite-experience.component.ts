@@ -4,6 +4,7 @@ import { FormsModule } from "@angular/forms";
 import { ReorientationCriteriaService } from "../../services/reorientation-criteria.service";
 import { SharedStateService } from "../../services/shared-state.service";
 import { TranslationService } from "../i18n";
+import { ManualCriterion } from "../data/reorientation-criteria.data";
 import { SCOLARITE_EXPERIENCE_TEMPLATE } from "./scolarite-experience.template";
 
 @Component({
@@ -35,6 +36,72 @@ export class ScolariteExperienceComponent {
   criteriaUniversitaireCycleSuperieurMaitrise = this.criteriaService.criteriaUniversitaireCycleSuperieurMaitrise;
   criteriaUniversitaireCycleSuperieurDoctorat = this.criteriaService.criteriaUniversitaireCycleSuperieurDoctorat;
   criteriaExperience = this.criteriaService.criteriaExperience;
+
+  // University degree search and filtering
+  univDegreeSearchQuery = signal<string>("");
+
+  private filterCriteriaByActiveLang(criteria: ManualCriterion[]): ManualCriterion[] {
+    const q = this.univDegreeSearchQuery().trim().toLowerCase();
+    if (!q) return criteria;
+    const isEn = this.i18n.lang() === "en";
+    return criteria.filter((c) => {
+      const label = isEn ? (c.labelEn || c.label) : c.label;
+      return label.toLowerCase().includes(q);
+    });
+  }
+
+  filteredUnivGenie = computed(() =>
+    this.filterCriteriaByActiveLang(this.criteriaUniversitaire1erCycleGenie())
+  );
+  filteredUnivSciences = computed(() =>
+    this.filterCriteriaByActiveLang(this.criteriaUniversitaire1erCycleSciences())
+  );
+  filteredUnivArts = computed(() =>
+    this.filterCriteriaByActiveLang(this.criteriaUniversitaire1erCycleArts())
+  );
+  filteredUnivSante = computed(() =>
+    this.filterCriteriaByActiveLang(this.criteriaUniversitaire1erCycleSante())
+  );
+  filteredUnivMaitrise = computed(() =>
+    this.filterCriteriaByActiveLang(this.criteriaUniversitaireCycleSuperieurMaitrise())
+  );
+  filteredUnivDoctorat = computed(() =>
+    this.filterCriteriaByActiveLang(this.criteriaUniversitaireCycleSuperieurDoctorat())
+  );
+
+  criteriaUniversitaire1erCycle = computed(() => [
+    ...this.criteriaUniversitaire1erCycleGenie(),
+    ...this.criteriaUniversitaire1erCycleSciences(),
+    ...this.criteriaUniversitaire1erCycleArts(),
+    ...this.criteriaUniversitaire1erCycleSante(),
+  ]);
+
+  criteriaUniversitaireCycleSuperieur = computed(() => [
+    ...this.criteriaUniversitaireCycleSuperieurMaitrise(),
+    ...this.criteriaUniversitaireCycleSuperieurDoctorat(),
+  ]);
+
+  totalFiltered1erCycleCount = computed(
+    () =>
+      this.filteredUnivGenie().length +
+      this.filteredUnivSciences().length +
+      this.filteredUnivArts().length +
+      this.filteredUnivSante().length
+  );
+
+  totalFilteredCycleSupCount = computed(
+    () =>
+      this.filteredUnivMaitrise().length +
+      this.filteredUnivDoctorat().length
+  );
+
+  totalFilteredUnivCount = computed(
+    () => this.totalFiltered1erCycleCount() + this.totalFilteredCycleSupCount()
+  );
+
+  clearUnivDegreeSearch() {
+    this.univDegreeSearchQuery.set("");
+  }
 
   expandedDomaines = signal<Set<string>>(new Set<string>());
 
@@ -71,6 +138,13 @@ export class ScolariteExperienceComponent {
 
   toggleManualCriterion(id: string) {
     this.criteriaService.toggleManualCriterion(id);
+  }
+
+  isDomaineExpanded(domaine: string): boolean {
+    if (this.univDegreeSearchQuery().trim().length > 0) {
+      return true;
+    }
+    return this.expandedDomaines().has(domaine);
   }
 
   toggleDomaine(domaine: string) {

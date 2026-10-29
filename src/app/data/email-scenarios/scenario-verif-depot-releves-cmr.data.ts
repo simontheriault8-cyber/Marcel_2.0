@@ -14,7 +14,7 @@ export const SCENARIO_VERIF_DEPOT_RELEVES_CMR: EmailScenario = {
           <li style="margin-bottom: 8px;"><strong>Vous n’avez toujours pas téléversé vos relevés de notes sur le portail d’admission du CMR.</strong> C’est important de compléter votre profil d’admission le plus rapidement possible afin que nous puissions faire avancer votre dossier dans les prochains mois.</li>
           <li style="margin-bottom: 8px;"><strong>Vous vous êtes rendu sur le Portail d’admission, mais vous n’avez pas complété votre profil en entier.</strong> Vous avez quitté le portail sans avoir vu la page « confirmation d’application ».</li>
         </ol>
-        <p>Voici un exemple de la page <a href="assets/aistudio/image_4c03cd3b.png" target="_blank" class="text-blue-600 hover:underline" style="color: #2563eb; text-decoration: underline;">Confirmation d'application</a>.</p>
+        <p>Voici un exemple de la page <a href="https://simontheriault8-cyber.github.io/Documents/Confirmation%20d%C3%A9pot%20de%20documents%20Portail%20d'admission%20CMC.png" target="_blank" class="text-blue-600 hover:underline" style="color: #2563eb; text-decoration: underline;">Confirmation d'application</a>.</p>
         <p>Si vous avez complété votre profil et avez vu la page « confirmation d’application », il est important de prendre une capture d’écran de cette page et de la téléverser sur votre profil de recrutement via la tâche « relevés de notes et diplômes ».</p>
         <p>Votre tâche « relevés de notes et diplômes » vous sera réattribuée pour que vous soyez en mesure de le faire.</p>
         <p>Finalement, si tout cela a déjà été fait, vous pouvez répondre directement à ce courriel, nous validerons que nous avons bel et bien la capture d’écran, et inscrirons la tâche comme complétée.</p>
@@ -34,7 +34,7 @@ export const SCENARIO_VERIF_DEPOT_RELEVES_CMR: EmailScenario = {
           <li style="margin-bottom: 8px;"><strong>You have not yet uploaded your transcripts to the RMC Admissions Portal.</strong> Please complete your admissions profile as soon as possible so that we can continue processing your application in the coming months.</li>
           <li style="margin-bottom: 8px;"><strong>Your application may not have been fully submitted.</strong> If you exited the portal before reaching the “Application Confirmation” page, your application may not have been fully submitted.</li>
         </ol>
-        <p>Here is an example page: <a href="assets/aistudio/image_4c03cd3b.png" target="_blank" class="text-blue-600 hover:underline" style="color: #2563eb; text-decoration: underline;">Application Confirmation</a>.</p>
+        <p>Here is an example page: <a href="https://simontheriault8-cyber.github.io/Documents/Confirmation%20d%C3%A9pot%20de%20documents%20Portail%20d'admission%20CMC.png" target="_blank" class="text-blue-600 hover:underline" style="color: #2563eb; text-decoration: underline;">Application Confirmation</a>.</p>
         <p>If you have completed your application and reached the “Application Confirmation” page, please take a screenshot of that page and upload it to your recruitment profile under the “Transcripts and Diplomas” task.</p>
         <p>This task will be reassigned to you so that you can upload the required screenshot.</p>
         <p>If you have already completed all of the steps above, simply reply to this email to let us know. We will verify that we have received your screenshot and mark the task as complete.</p>
@@ -57,7 +57,7 @@ Votre dossier est dans l’un des scénarios suivants :
 1. Vous n’avez toujours pas téléversé vos relevés de notes sur le portail d’admission du CMR. C’est important de compléter votre profil d’admission le plus rapidement possible afin que nous puissions faire avancer votre dossier dans les prochains mois.
 2. Vous vous êtes rendu sur le Portail d’admission, mais vous n’avez pas complété votre profil en entier. Vous avez quitté le portail sans avoir vu la page « confirmation d’application ».
 
-Voici un exemple de la page Confirmation d'application (assets/aistudio/image_4c03cd3b.png).
+Voici un exemple de la page Confirmation d'application (https://simontheriault8-cyber.github.io/Documents/Confirmation%20d%C3%A9pot%20de%20documents%20Portail%20d'admission%20CMC.png).
 
 Si vous avez complété votre profil et avez vu la page « confirmation d’application », il est important de prendre une capture d’écran de cette page et de la téléverser sur votre profil de recrutement via la tâche « relevés de notes et diplômes ».
 
@@ -85,7 +85,7 @@ Your application may fall into one of the following situations:
 1. You have not yet uploaded your transcripts to the RMC Admissions Portal. Please complete your admissions profile as soon as possible so that we can continue processing your application in the coming months.
 2. Your application may not have been fully submitted. If you exited the portal before reaching the “Application Confirmation” page, your application may not have been fully submitted.
 
-Here is an example page: Application Confirmation (assets/aistudio/image_4c03cd3b.png).
+Here is an example page: Application Confirmation (https://simontheriault8-cyber.github.io/Documents/Confirmation%20d%C3%A9pot%20de%20documents%20Portail%20d'admission%20CMC.png).
 
 If you have completed your application and reached the “Application Confirmation” page, please take a screenshot of that page and upload it to your recruitment profile under the “Transcripts and Diplomas” task.
 

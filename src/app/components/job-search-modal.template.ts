@@ -76,16 +76,18 @@ export const JOB_SEARCH_MODAL_TEMPLATE = `
                 {{ i18n.t('careerPortal.tabPfor') }}
               </button>
             }
-            <button
-              (click)="activeTab.set('catalogue')"
-              class="px-3 py-1 rounded-md text-sm font-medium transition-colors cursor-pointer"
-              [class.bg-slate-700]="activeTab() === 'catalogue'"
-              [class.text-white]="activeTab() === 'catalogue'"
-              [class.text-slate-400]="activeTab() !== 'catalogue'"
-              [class.hover:text-white]="activeTab() !== 'catalogue'"
-            >
-              {{ i18n.t('careerPortal.tabCatalog') }}
-            </button>
+            @if (false) {
+              <button
+                (click)="activeTab.set('catalogue')"
+                class="px-3 py-1 rounded-md text-sm font-medium transition-colors cursor-pointer"
+                [class.bg-slate-700]="activeTab() === 'catalogue'"
+                [class.text-white]="activeTab() === 'catalogue'"
+                [class.text-slate-400]="activeTab() !== 'catalogue'"
+                [class.hover:text-white]="activeTab() !== 'catalogue'"
+              >
+                {{ i18n.t('careerPortal.tabCatalog') }}
+              </button>
+            }
           </div>
         </div>
 
@@ -176,15 +178,17 @@ export const JOB_SEARCH_MODAL_TEMPLATE = `
             {{ i18n.t('careerPortal.tabPfor') }}
           </button>
         }
-        <button
-          (click)="activeTab.set('catalogue')"
-          class="flex-1 min-w-[60px] px-2.5 py-1.5 rounded-md text-xs font-medium transition-colors"
-          [class.bg-slate-700]="activeTab() === 'catalogue'"
-          [class.text-white]="activeTab() === 'catalogue'"
-          [class.text-slate-400]="activeTab() !== 'catalogue'"
-        >
-          {{ i18n.t('careerPortal.tabCatalog') }}
-        </button>
+        @if (false) {
+          <button
+            (click)="activeTab.set('catalogue')"
+            class="flex-1 min-w-[60px] px-2.5 py-1.5 rounded-md text-xs font-medium transition-colors"
+            [class.bg-slate-700]="activeTab() === 'catalogue'"
+            [class.text-white]="activeTab() === 'catalogue'"
+            [class.text-slate-400]="activeTab() !== 'catalogue'"
+          >
+            {{ i18n.t('careerPortal.tabCatalog') }}
+          </button>
+        }
       </div>
 
       <!-- Content -->

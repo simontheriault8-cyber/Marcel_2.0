@@ -7,6 +7,7 @@ import { REGISTRY_NOTES_FR, REGISTRY_NOTES_EN, REJECTION_REASONS_LOG_NOTES } fro
 import { EMAILS_SUBJECTS_HEADERS_FR, EMAILS_SUBJECTS_HEADERS_EN } from './dictionaries/emails-subjects-headers.dict';
 import { DATA_LABELS_FR, DATA_LABELS_EN } from './dictionaries/data-labels.dict';
 import { JOBS_TITLES_FR, JOBS_TITLES_EN, JOBS_DICTIONARY } from './dictionaries/jobs.dict';
+import { UNIVERSITY_DEGREES_FR, UNIVERSITY_DEGREES_EN } from './dictionaries/university-degrees.dict';
 
 const STORAGE_KEY = 'marcel_app_lang';
 
@@ -41,6 +42,7 @@ export class TranslationService {
       ...EMAILS_SUBJECTS_HEADERS_FR,
       ...DATA_LABELS_FR,
       ...JOBS_TITLES_FR,
+      ...UNIVERSITY_DEGREES_FR,
     },
     en: {
       ...UI_COMMON_EN,
@@ -50,6 +52,7 @@ export class TranslationService {
       ...EMAILS_SUBJECTS_HEADERS_EN,
       ...DATA_LABELS_EN,
       ...JOBS_TITLES_EN,
+      ...UNIVERSITY_DEGREES_EN,
     },
   };
 

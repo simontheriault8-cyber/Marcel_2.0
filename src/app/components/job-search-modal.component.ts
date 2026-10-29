@@ -46,7 +46,7 @@ export class JobSearchModalComponent {
   @Input() set showReorientationTab(val: boolean) {
     this._showReorientationTab.set(val);
     if (!val && (this.activeTab() === "reorientation" || this.activeTab() === "pfor")) {
-      this.activeTab.set("catalogue");
+      this.activeTab.set("reorientation");
     }
   }
   _showReorientationTab = signal<boolean>(true);

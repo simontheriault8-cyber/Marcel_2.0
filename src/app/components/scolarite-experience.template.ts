@@ -295,8 +295,40 @@ export const SCOLARITE_EXPERIENCE_TEMPLATE = `
                   *ngIf="activeScolariteTab() === 'universitaire'"
                   class="flex flex-col gap-2"
                 >
+                  <!-- Search bar for university degrees -->
+                  <div class="px-2 pt-1 pb-2">
+                    <div class="relative">
+                      <div class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-slate-400">
+                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                      </div>
+                      <input
+                        type="text"
+                        [ngModel]="univDegreeSearchQuery()"
+                        (ngModelChange)="univDegreeSearchQuery.set($event)"
+                        [placeholder]="i18n.t('scolExp.searchDegreePlaceholder')"
+                        class="w-full pl-8 pr-8 py-1.5 text-xs bg-slate-50 hover:bg-white focus:bg-white border border-slate-200 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
+                      />
+                      <button
+                        *ngIf="univDegreeSearchQuery()"
+                        (click)="clearUnivDegreeSearch()"
+                        type="button"
+                        [title]="i18n.t('scolExp.clearSearch')"
+                        class="absolute inset-y-0 right-0 pr-2 flex items-center text-slate-400 hover:text-slate-600 focus:outline-none"
+                      >
+                        <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    </div>
+                    <div *ngIf="univDegreeSearchQuery() && totalFilteredUnivCount() === 0" class="mt-2 text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-md p-2 text-center">
+                      {{ i18n.t('scolExp.noDegreeFound') }}
+                    </div>
+                  </div>
+
                   <!-- Premier cycle -->
-                  <div>
+                  <div *ngIf="!univDegreeSearchQuery() || totalFiltered1erCycleCount() > 0">
                     <label
                       class="flex items-center gap-2 px-3 mb-2 cursor-pointer group"
                     >
@@ -317,7 +349,11 @@ export const SCOLARITE_EXPERIENCE_TEMPLATE = `
                       </h4>
                     </label>
 
-                    <div class="ml-2 mb-2 border-t border-slate-100 pt-2">
+                    <!-- Domaine Génie -->
+                    <div
+                      *ngIf="!univDegreeSearchQuery() || filteredUnivGenie().length > 0"
+                      class="ml-2 mb-2 border-t border-slate-100 pt-2"
+                    >
                       <div
                         class="flex items-center gap-1 w-full px-1 py-1 group"
                       >
@@ -327,7 +363,7 @@ export const SCOLARITE_EXPERIENCE_TEMPLATE = `
                         >
                           <svg
                             class="w-4 h-4 text-slate-400 group-hover:text-slate-600 transition-transform"
-                            [class.rotate-90]="expandedDomaines().has('genie')"
+                            [class.rotate-90]="isDomaineExpanded('genie')"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
                             fill="none"
@@ -360,12 +396,12 @@ export const SCOLARITE_EXPERIENCE_TEMPLATE = `
                         </label>
                       </div>
                       <div
-                        *ngIf="expandedDomaines().has('genie')"
+                        *ngIf="isDomaineExpanded('genie')"
                         class="mt-1 pl-4"
                       >
                         <label
                           *ngFor="
-                            let crit of criteriaUniversitaire1erCycleGenie()
+                            let crit of filteredUnivGenie()
                           "
                           class="flex items-start gap-3 p-1.5 hover:bg-slate-50 rounded-lg cursor-pointer transition-colors border border-transparent hover:border-slate-200 group"
                         >
@@ -383,7 +419,11 @@ export const SCOLARITE_EXPERIENCE_TEMPLATE = `
                       </div>
                     </div>
 
-                    <div class="ml-2 mb-2 border-t border-slate-100 pt-2">
+                    <!-- Domaine Sciences -->
+                    <div
+                      *ngIf="!univDegreeSearchQuery() || filteredUnivSciences().length > 0"
+                      class="ml-2 mb-2 border-t border-slate-100 pt-2"
+                    >
                       <div
                         class="flex items-center gap-1 w-full px-1 py-1 group"
                       >
@@ -394,7 +434,7 @@ export const SCOLARITE_EXPERIENCE_TEMPLATE = `
                           <svg
                             class="w-4 h-4 text-slate-400 group-hover:text-slate-600 transition-transform"
                             [class.rotate-90]="
-                              expandedDomaines().has('sciences')
+                              isDomaineExpanded('sciences')
                             "
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
@@ -430,12 +470,12 @@ export const SCOLARITE_EXPERIENCE_TEMPLATE = `
                         </label>
                       </div>
                       <div
-                        *ngIf="expandedDomaines().has('sciences')"
+                        *ngIf="isDomaineExpanded('sciences')"
                         class="mt-1 pl-4"
                       >
                         <label
                           *ngFor="
-                            let crit of criteriaUniversitaire1erCycleSciences()
+                            let crit of filteredUnivSciences()
                           "
                           class="flex items-start gap-3 p-1.5 hover:bg-slate-50 rounded-lg cursor-pointer transition-colors border border-transparent hover:border-slate-200 group"
                         >
@@ -453,7 +493,11 @@ export const SCOLARITE_EXPERIENCE_TEMPLATE = `
                       </div>
                     </div>
 
-                    <div class="ml-2 mb-2 border-t border-slate-100 pt-2">
+                    <!-- Domaine Arts -->
+                    <div
+                      *ngIf="!univDegreeSearchQuery() || filteredUnivArts().length > 0"
+                      class="ml-2 mb-2 border-t border-slate-100 pt-2"
+                    >
                       <div
                         class="flex items-center gap-1 w-full px-1 py-1 group"
                       >
@@ -463,7 +507,7 @@ export const SCOLARITE_EXPERIENCE_TEMPLATE = `
                         >
                           <svg
                             class="w-4 h-4 text-slate-400 group-hover:text-slate-600 transition-transform"
-                            [class.rotate-90]="expandedDomaines().has('arts')"
+                            [class.rotate-90]="isDomaineExpanded('arts')"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
                             fill="none"
@@ -496,12 +540,12 @@ export const SCOLARITE_EXPERIENCE_TEMPLATE = `
                         </label>
                       </div>
                       <div
-                        *ngIf="expandedDomaines().has('arts')"
+                        *ngIf="isDomaineExpanded('arts')"
                         class="mt-1 pl-4"
                       >
                         <label
                           *ngFor="
-                            let crit of criteriaUniversitaire1erCycleArts()
+                            let crit of filteredUnivArts()
                           "
                           class="flex items-start gap-3 p-1.5 hover:bg-slate-50 rounded-lg cursor-pointer transition-colors border border-transparent hover:border-slate-200 group"
                         >
@@ -519,7 +563,11 @@ export const SCOLARITE_EXPERIENCE_TEMPLATE = `
                       </div>
                     </div>
 
-                    <div class="ml-2 mb-4 border-t border-slate-100 pt-2">
+                    <!-- Domaine Santé -->
+                    <div
+                      *ngIf="!univDegreeSearchQuery() || filteredUnivSante().length > 0"
+                      class="ml-2 mb-4 border-t border-slate-100 pt-2"
+                    >
                       <div
                         class="flex items-center gap-1 w-full px-1 py-1 group"
                       >
@@ -529,7 +577,7 @@ export const SCOLARITE_EXPERIENCE_TEMPLATE = `
                         >
                           <svg
                             class="w-4 h-4 text-slate-400 group-hover:text-slate-600 transition-transform"
-                            [class.rotate-90]="expandedDomaines().has('sante')"
+                            [class.rotate-90]="isDomaineExpanded('sante')"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
                             fill="none"
@@ -562,12 +610,12 @@ export const SCOLARITE_EXPERIENCE_TEMPLATE = `
                         </label>
                       </div>
                       <div
-                        *ngIf="expandedDomaines().has('sante')"
+                        *ngIf="isDomaineExpanded('sante')"
                         class="mt-1 pl-4"
                       >
                         <label
                           *ngFor="
-                            let crit of criteriaUniversitaire1erCycleSante()
+                            let crit of filteredUnivSante()
                           "
                           class="flex items-start gap-3 p-1.5 hover:bg-slate-50 rounded-lg cursor-pointer transition-colors border border-transparent hover:border-slate-200 group"
                         >
@@ -586,7 +634,7 @@ export const SCOLARITE_EXPERIENCE_TEMPLATE = `
                     </div>
 
                     <div
-                      *ngIf="criteriaUniversitaire1erCycle().length === 0"
+                      *ngIf="!univDegreeSearchQuery() && criteriaUniversitaire1erCycle().length === 0"
                       class="text-sm text-slate-500 italic p-3 text-center border border-dashed border-slate-200 rounded-lg"
                     >
                       {{ i18n.t('scolExp.noCriteriaDefined') }}
@@ -594,7 +642,10 @@ export const SCOLARITE_EXPERIENCE_TEMPLATE = `
                   </div>
 
                   <!-- Cycle supérieur -->
-                  <div class="mt-4 pt-4 border-t border-slate-100">
+                  <div
+                    *ngIf="!univDegreeSearchQuery() || totalFilteredCycleSupCount() > 0"
+                    class="mt-4 pt-4 border-t border-slate-100"
+                  >
                     <label
                       class="flex items-center gap-2 px-3 mb-2 cursor-pointer group"
                     >
@@ -615,7 +666,11 @@ export const SCOLARITE_EXPERIENCE_TEMPLATE = `
                       </h4>
                     </label>
 
-                    <div class="ml-2 mb-2 border-t border-slate-100 pt-2">
+                    <!-- Maîtrise -->
+                    <div
+                      *ngIf="!univDegreeSearchQuery() || filteredUnivMaitrise().length > 0"
+                      class="ml-2 mb-2 border-t border-slate-100 pt-2"
+                    >
                       <div
                         class="flex items-center gap-1 w-full px-1 py-1 group"
                       >
@@ -626,7 +681,7 @@ export const SCOLARITE_EXPERIENCE_TEMPLATE = `
                           <svg
                             class="w-4 h-4 text-slate-400 group-hover:text-slate-600 transition-transform"
                             [class.rotate-90]="
-                              expandedDomaines().has('maitrise')
+                              isDomaineExpanded('maitrise')
                             "
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
@@ -662,12 +717,12 @@ export const SCOLARITE_EXPERIENCE_TEMPLATE = `
                         </label>
                       </div>
                       <div
-                        *ngIf="expandedDomaines().has('maitrise')"
+                        *ngIf="isDomaineExpanded('maitrise')"
                         class="mt-1 pl-4"
                       >
                         <label
                           *ngFor="
-                            let crit of criteriaUniversitaireCycleSuperieurMaitrise()
+                            let crit of filteredUnivMaitrise()
                           "
                           class="flex items-start gap-3 p-1.5 hover:bg-slate-50 rounded-lg cursor-pointer transition-colors border border-transparent hover:border-slate-200 group"
                         >
@@ -685,7 +740,11 @@ export const SCOLARITE_EXPERIENCE_TEMPLATE = `
                       </div>
                     </div>
 
-                    <div class="ml-2 mb-4 border-t border-slate-100 pt-2">
+                    <!-- Doctorat -->
+                    <div
+                      *ngIf="!univDegreeSearchQuery() || filteredUnivDoctorat().length > 0"
+                      class="ml-2 mb-4 border-t border-slate-100 pt-2"
+                    >
                       <div
                         class="flex items-center gap-1 w-full px-1 py-1 group"
                       >
@@ -696,7 +755,7 @@ export const SCOLARITE_EXPERIENCE_TEMPLATE = `
                           <svg
                             class="w-4 h-4 text-slate-400 group-hover:text-slate-600 transition-transform"
                             [class.rotate-90]="
-                              expandedDomaines().has('doctorat')
+                              isDomaineExpanded('doctorat')
                             "
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
@@ -732,12 +791,12 @@ export const SCOLARITE_EXPERIENCE_TEMPLATE = `
                         </label>
                       </div>
                       <div
-                        *ngIf="expandedDomaines().has('doctorat')"
+                        *ngIf="isDomaineExpanded('doctorat')"
                         class="mt-1 pl-4"
                       >
                         <label
                           *ngFor="
-                            let crit of criteriaUniversitaireCycleSuperieurDoctorat()
+                            let crit of filteredUnivDoctorat()
                           "
                           class="flex items-start gap-3 p-1.5 hover:bg-slate-50 rounded-lg cursor-pointer transition-colors border border-transparent hover:border-slate-200 group"
                         >
@@ -756,7 +815,7 @@ export const SCOLARITE_EXPERIENCE_TEMPLATE = `
                     </div>
 
                     <div
-                      *ngIf="criteriaUniversitaireCycleSuperieur().length === 0"
+                      *ngIf="!univDegreeSearchQuery() && criteriaUniversitaireCycleSuperieur().length === 0"
                       class="text-sm text-slate-500 italic p-3 text-center border border-dashed border-slate-200 rounded-lg"
                     >
                       {{ i18n.t('scolExp.noCriteriaDefined') }}
